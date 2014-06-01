@@ -19,7 +19,7 @@ avec un mot de passe erroné grâce à fail2ban.
 install apache
 ===============
 Dans /etc/apache2/apache2.conf
-# Enlever les informations sur le serveur en cas de 404
+# Enlever les informations sur le serveur en cas de 404--
 ServerSignature Off
 ServerTokens Prod
 # nom serveur
@@ -61,3 +61,34 @@ mbstring.internal_encoding=UTF-8
 mbstring.http_input=UTF-8
 mbstring.http_output=UTF-8
 mbstring.detect_order=auto
+
+install mysql
+==============
+ apt-get install mysql-server mysql-client mysql-common
+ /etc/mysql/my.cnf
+ 
+ # Mettre la langue en Français
+language = /usr/share/mysql/french
+# Taille du cache des index
+key_buffer = 32M
+# Limite du cache par requête
+query_cache_limit = 2M
+# Limite du cache pour toutes les requêtes
+query_cache_size = 32M
+# Loguer les requêtes lentes
+log_slow_queries = /var/log/mysql/mysql-slow.log
+# Indique le temps à partir du moment ou une requête est considéré comme lente
+long_query_time = 2
+# Activer l'utf-8 par default sur le serveur (dans [mysqld])
+default-character-set = utf8
+default-collation = utf8_general_ci
+# dans [client]
+default-character-set = utf8
+
+ /etc/init.d/mysql reload
+ 
+ lancer « mysql_secure_installation
+ apt-get install phpmyadmin
+ 
+ 
+ 
