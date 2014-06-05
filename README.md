@@ -99,3 +99,11 @@ install Redis / MongoDB
 install python
 ==============
  
+
+
+
+Final action
+============
+wget http://svn.xxxxx.com/postinstall/trunk/postinstall.sh
+chmod a+x ./postinstall.sh
+sudo ./postinstall.sh
