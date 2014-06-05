@@ -17,8 +17,8 @@ faire une liste des utilisateurs autorisés à se connecter en ssh avec AllowUse
 
 ban ip
 =======
-bannir les adresses ip qui tente de se connecter 3 fois de suites 
-avec un mot de passe erroné grâce à fail2ban.
+bannir les adresses ip qui tente de se connecter 
+5 fois de suites avec un mot de passe erroné grâce à fail2ban.
 
 install apache
 ===============
@@ -63,10 +63,13 @@ mbstring.detect_order=auto
 install mysql
 ==============
  apt-get install mysql-server mysql-client mysql-common
+ 
  /etc/mysql/my.cnf
  
 
+
 language = /usr/share/mysql/french
+
 //  Taille du cache des index
 key_buffer = 32M
 //  Limite du cache par requête
@@ -89,4 +92,10 @@ lancer « mysql_secure_installation
  apt-get install phpmyadmin
  
  
+install Redis / MongoDB
+==============
+
+
+install python
+==============
  
