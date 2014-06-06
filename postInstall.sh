@@ -37,14 +37,32 @@ echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]}
 apt-get install fail2ban
 # TODO : Configuration ....
 
-# PHP #PHP-FPM
-echo "========================================================================"
+# PHP #PHP-FPM #PHP APC
+echo "================== ======================================================"
 echo "Installation PHP + PHP-FPM"
 echo "========================================================================"
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn 
 php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming 
 php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc 
-php5-xsl php5-fpm php5-mysql
+php5-xsl php5-fpm php5-mysql php5-apc
+
+#PHP-FPM CONFIG
+
+sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
+#listen = /var/run/php5-fpm.sock
+
+#listen.owner = www-data
+#listen.group = www-data
+#listen.mode = 0660
+
+/etc/init.d/php5-fpm restart
+
+
+
+
+
+
+
 
 
 
@@ -57,7 +75,15 @@ mysql_install_db
 
 apt-get install nginx
 service nginx start
-nano /etc/nginx/sites-available/default
+/etc/nginx/conf.d/php5-fpm.conf
+ 
+
+upstream php5-fpm-sock {
+        server unix:/var/run/php5-fpm.sock;
+}
+
+
+/etc/nginx/sites-available/default
 
 server {
         listen   80;
@@ -91,6 +117,18 @@ server {
 
 }
 
+
+#  http://www.if-not-true-then-false.com/2011/nginx-and-php-fpm-configuration-and-optimizing-tips-and-tricks/
+
+# APC CONFIG
+
+/etc/php5/fpm/conf.d/apc.ini
+
+; configuration for php apc module
+extension=apc.so
+apc.shm_size=100
+
+/etc/init.d/php-fpm restart
 #MANGO REDIS
 
 # Ajout des depots
