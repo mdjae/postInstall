@@ -129,6 +129,7 @@ extension=apc.so
 apc.shm_size=100
 
 /etc/init.d/php-fpm restart
+
 #MANGO REDIS
 
 # Ajout des depots
@@ -137,10 +138,39 @@ apc.shm_size=100
 
 # Custom .bashrc
 
+# some more ls aliases
+alias ll='ls -algs'
+alias l='ls -ltr'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
 
 
+# Paths Oracle 10g
+export PATH=$PATH:/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin:
+ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
+export ORACLE_HOME
+export ORACLE_SID=XE
+LD_LIBRARY_PATH=/opt/oracle/instantclient_10_2/
+export LD_LIBRARY_PATH
 
+# Java
+export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
 
+# Tomcat
+export TOMCAT_HOME=/opt/tomcat
+export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
+alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
+alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
+
+# Mise a jour 
+#------------
+
+echo "Mise a jour de la liste des depots"
+apt-get -y update
+
+echo "Mise a jour du systeme"
+apt-get -y upgrade
 
 
 
