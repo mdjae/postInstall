@@ -16,6 +16,13 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
+# Je suppose que SSH est déjà installé
+
+sed -e 's/Port 22/Port 222/g' /etc/ssh/sshd_config
+sed -e 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
+sed -e 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+echo "AllowUsers user1 user2 user3"
+
 # Ajout des depots
 
 # Custom du systeme
