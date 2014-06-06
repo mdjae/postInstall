@@ -1,7 +1,8 @@
 postInstall
 ===========
 
-Script postInstall
+Script de post installation de station de travail ou de serveur de production.
+La configuration de l'install dans un fichier à part.
 
 sécuriser ssh
 =============
@@ -59,6 +60,13 @@ mbstring.internal_encoding=UTF-8
 mbstring.http_input=UTF-8
 mbstring.http_output=UTF-8
 mbstring.detect_order=auto
+
+install php-fpm
+==============
+
+
+install APC
+==============
 
 install mysql
 ==============
