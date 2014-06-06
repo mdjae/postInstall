@@ -1,8 +1,7 @@
 #!/bin/bash
 #
-# mdjae - now
-# GPL
-# Le script de post install vient après l'install :
+# mdjae - 2014 - GPL
+# Le script de post install vient après l'install d'une distro :
 # EN MODE SERVER : Debian 7.0 Wheezy
 # EN MODE WORKSTATION : CrunchBang Linux 11 "Waldorf"
 
@@ -30,6 +29,23 @@ sed -i 's/Port 22/Port 222/g' /etc/ssh/sshd_config
 sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 
+#for filename in $(ls)
+#do
+	# Take extension available in a filename
+#        ext=${filename##*\.}
+#        case "$ext" in
+#        c) echo "$filename : C source file"
+#           ;;
+#        o) echo "$filename : Object file"
+#           ;;
+#        sh) echo "$filename : Shell script"
+#            ;;
+#        txt) echo "$filename : Text file"
+#             ;;
+#        *) echo "C"
+#           ;;
+#esac
+#done
 
 echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]} ${SSH_USERS[4]}" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
@@ -56,11 +72,6 @@ sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool
 #listen.mode = 0660
 
 /etc/init.d/php5-fpm restart
-
-
-
-
-
 
 
 
@@ -139,12 +150,14 @@ apc.shm_size=100
 # Custom .bashrc
 
 # some more ls aliases
+cat >> $HOME/.bashrc << EOF
 alias ll='ls -algs'
 alias l='ls -ltr'
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
-
+EOF
+source $HOME/.bashrc
 
 # Paths Oracle 10g
 export PATH=$PATH:/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin:
