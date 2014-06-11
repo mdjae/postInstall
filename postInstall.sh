@@ -10,6 +10,8 @@ VERSION="0.1"
 #===================================
 
 
+source /postInstall.config
+
 # Test que le script est lance en root
 if [ $EUID -ne 0 ]; then
   echo "========================================================================"
@@ -28,7 +30,7 @@ echo "========================================================================"
 sed -i 's/Port 22/Port 222/g' /etc/ssh/sshd_config
 sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config 
-sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+
 
 #for filename in $(ls)
 #do
