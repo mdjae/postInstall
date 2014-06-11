@@ -9,8 +9,9 @@ VERSION="0.1"
 
 #===================================
 
-
+# Source config variable
 source ./postInstall.config
+
 
 # Test que le script est lance en root
 if [ $EUID -ne 0 ]; then
@@ -19,7 +20,6 @@ if [ $EUID -ne 0 ]; then
   echo "========================================================================"
   exit 1
 fi
-
 
 
 # Je suppose que SSH est déjà installé
@@ -33,21 +33,22 @@ sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 
 
 #for filename in $(ls)
-#do
+#	do
 	# Take extension available in a filename
 #        ext=${filename##*\.}
+
 #        case "$ext" in
-#        c) echo "$filename : C source file"
-#           ;;
-#        o) echo "$filename : Object file"
-#           ;;
-#        sh) echo "$filename : Shell script"
-#            ;;
-#        txt) echo "$filename : Text file"
-#             ;;
-#        *) echo "C"
-#           ;;
-#esac
+#        	c) echo "$filename : C source file"
+#       	   ;;
+#        	o) echo "$filename : Object file"
+#       	   ;;
+#        	sh) echo "$filename : Shell script"
+#       	    ;;
+#        	txt) echo "$filename : Text file"
+#       	    ;;
+#       	 *) echo "C"
+#       	    ;;
+#	esac
 #done
 
 echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]} ${SSH_USERS[4]}" >> /etc/ssh/sshd_config
