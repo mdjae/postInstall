@@ -10,7 +10,7 @@ VERSION="0.1"
 #===================================
 
 
-source /postInstall.config
+source ./postInstall.config
 
 # Test que le script est lance en root
 if [ $EUID -ne 0 ]; then
