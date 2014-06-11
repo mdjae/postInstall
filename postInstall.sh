@@ -2,7 +2,7 @@
 #
 # mdjae - 2014 - GPL
 # Le script de post install vient après l'install d'une distro :
-# EN MODE SERVER : Debian 7.0 Wheezy
+# EN MODE SERVER : Debian 7.5 Wheezy 64 bits
 # EN MODE WORKSTATION : CrunchBang Linux 11 "Waldorf"
 
 VERSION="0.1"
