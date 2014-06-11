@@ -184,10 +184,11 @@ alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
 #------------
 
 echo "Mise a jour de la liste des depots"
-apt-get -y update
+#
 
 echo "Mise a jour du systeme"
-apt-get -y upgrade
+apt-get update && pat-get -V upgrade
+
 
 
 
