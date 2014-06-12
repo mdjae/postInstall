@@ -88,6 +88,12 @@ sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool
 apt-get install mysql-server
 mysql_install_db
 /usr/bin/mysql_secure_installation
+service mysql restart
+update-rc.d -f mysql enable
+
+
+#PROFTPD
+apt-get install proftpd
 
 # NGINX
 
