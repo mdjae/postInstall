@@ -12,6 +12,9 @@ VERSION="0.1"
 # Source config variable
 source ./postInstall.config
 
+#Color bash prompt
+
+sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
 
 # Test que le script est lance en root
 if [ $EUID -ne 0 ]; then
