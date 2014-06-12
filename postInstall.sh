@@ -94,7 +94,11 @@ update-rc.d -f mysql enable
 
 #PROFTPD
 apt-get install proftpd
+/etc/init.d/proftpd stop
 
+mkdir /etc/proftpd
+cd /etc/proftpd
+openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.pem
 # NGINX
 
 apt-get install nginx
@@ -153,6 +157,7 @@ extension=apc.so
 apc.shm_size=100
 
 /etc/init.d/php-fpm restart
+update-rc.d -f php5-fpm enable
 
 #MANGO REDIS
 
