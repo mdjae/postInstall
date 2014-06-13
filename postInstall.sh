@@ -196,7 +196,10 @@ echo "Mise a jour du systeme"
 apt-get update && pat-get -V upgrade
 
 echo "Regles iptables basic"
+# xxx.xxx.xxx.xxx est le server ip
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
+iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
+
 
 
 
