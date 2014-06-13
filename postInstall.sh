@@ -72,25 +72,13 @@ php5-xsl php5-fpm php5-mysql php5-apc
 #PHP-FPM CONFIG
 
 sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
-#listen = /var/run/php5-fpm.sock
-
-#listen.owner = www-data
-#listen.group = www-data
-#listen.mode = 0660
-
 /etc/init.d/php5-fpm restart
-
-
-
 
 
 #MYSQL
 apt-get install mysql-server
-mysql_install_db
-/usr/bin/mysql_secure_installation
 service mysql restart
 update-rc.d -f mysql enable
-
 
 #PROFTPD
 apt-get install proftpd
@@ -99,8 +87,8 @@ apt-get install proftpd
 mkdir /etc/proftpd
 cd /etc/proftpd
 openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.pem
-# NGINX
 
+# NGINX
 apt-get install nginx
 service nginx start
 /etc/nginx/conf.d/php5-fpm.conf
@@ -161,22 +149,6 @@ update-rc.d -f php5-fpm enable
 
 #MANGO REDIS
 
-# Ajout des depots
-
-# Custom du systeme
-
-# Custom .bashrc
-
-# some more ls aliases
-cat >> $HOME/.bashrc << EOF
-alias ll='ls -algs'
-alias l='ls -ltr'
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-EOF
-source $HOME/.bashrc
-
 # Paths Oracle 10g
 export PATH=$PATH:/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin:
 ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
@@ -194,6 +166,26 @@ export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
 alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
 alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
 
+
+
+
+# Ajout des depots
+
+# Custom du systeme
+
+# Custom .bashrc
+
+cat >> $HOME/.bashrc << EOF
+alias ll='ls -algs'
+alias l='ls -ltr'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+EOF
+source $HOME/.bashrc
+
+
+
 # Mise a jour 
 #------------
 
@@ -203,7 +195,8 @@ echo "Mise a jour de la liste des depots"
 echo "Mise a jour du systeme"
 apt-get update && pat-get -V upgrade
 
-
+echo "Regles iptables basic"
+iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
 
 
 
