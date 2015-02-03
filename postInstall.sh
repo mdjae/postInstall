@@ -12,7 +12,7 @@ VERSION="0.1"
 # Source config variable
 source ./postInstall.config
 
-#Color bash prompt
+# Color bash prompt
 
 sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
 
@@ -114,7 +114,7 @@ To read:
 
           ftpadmin:x:502:502::/home/ftp/./ftpadmin/:/dev/null
           ^^
-
+mys
 # NGINX
 apt-get install nginx
 service nginx start
