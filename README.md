@@ -117,3 +117,7 @@ Utilisation du script de post install
 wget http://svn.xxxxx.com/postinstall/trunk/postinstall.sh
 chmod a+x ./postinstall.sh
 sudo ./postinstall.sh
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mdjae/postinstall/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
