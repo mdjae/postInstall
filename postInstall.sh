@@ -80,6 +80,9 @@ apt-get install mysql-server
 service mysql restart
 update-rc.d -f mysql enable
 
+#PHPMYADMIN
+apt-get install dbconfig-common phpmyadmin
+
 #PROFTPD
 apt-get install proftpd
 /etc/init.d/proftpd stop
@@ -90,31 +93,29 @@ openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.p
 
 
 
- Edit the /etc/shells file, vi /etc/shells and add a non-existent shell name like null, for example. This fake shell will limit access on the system for FTP users.
-
-          [root@deep ] /# vi /etc/shells
+# Edit the /etc/shells file, vi /etc/shells and add a non-existent shell name like null, 
+#for example. This fake shell will limit access on the system for FTP users.
+#
+#         [root@deep ] /# vi /etc/shells
+#          /bin/bash
+#          /bin/sh
+#          /bin/ash
+#          /bin/bsh
+#          /bin/tcsh
+#          /bin/csh
+#          /dev/null  
         
-
-          /bin/bash
-          /bin/sh
-          /bin/ash
-          /bin/bsh
-          /bin/tcsh
-          /bin/csh
-          /dev/null  
+# /dev/null, This is our added no-existent shell. With Red Hat Linux, a special device name /dev/null 
+# exists for purposes such as these.
+# Now, edit your /etc/passwd file and add manually the /./ line to divide the /home/ftp directory with the /ftpadmin directory where the user ftpadmin should be automatically chdir'd to. 
+# This step must be done for each FTP user you add to your passwd file.
+ #         ftpadmin:x:502:502::/home/ftp/ftpadmin/:/dev/null
         
-/dev/null, This is our added no-existent shell. With Red Hat Linux, a special device name /dev/null exists for purposes such as these.
+#To read:
+#          ftpadmin:x:502:502::/home/ftp/./ftpadmin/:/dev/null
 
 
- Now, edit your /etc/passwd file and add manually the /./ line to divide the /home/ftp directory with the /ftpadmin directory where the user ftpadmin should be automatically chdir'd to. This step must be done for each FTP user you add to your passwd file.
 
-          ftpadmin:x:502:502::/home/ftp/ftpadmin/:/dev/null
-        
-To read:
-
-          ftpadmin:x:502:502::/home/ftp/./ftpadmin/:/dev/null
-          ^^
-mys
 # NGINX
 apt-get install nginx
 service nginx start
