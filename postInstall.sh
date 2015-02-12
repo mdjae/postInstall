@@ -64,9 +64,9 @@ apt-get install fail2ban
 echo "================== ======================================================"
 echo "Installation PHP + PHP-FPM"
 echo "========================================================================"
-apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn 
-php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming 
-php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc 
+apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn \
+php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming \
+php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc \
 php5-xsl php5-fpm php5-mysql php5-apc
 
 #PHP-FPM CONFIG
@@ -193,7 +193,8 @@ export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
 alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
 alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
 
-
+# Utilitaire SysAdmin
+apt-get install ncdu htop
 
 
 # Ajout des depots
@@ -202,8 +203,8 @@ alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
 
 # Custom .bashrc
 
-cat >> $HOME/.bashrc << EOF
-alias ll='ls -algs'
+cat >> $HOME/.bashrc << EOF 
+alias ll='ls -algs' 
 alias l='ls -ltr'
 alias rm='rm -i'
 alias mv='mv -i'
@@ -220,7 +221,7 @@ echo "Mise a jour de la liste des depots"
 #
 
 echo "Mise a jour du systeme"
-apt-get update && pat-get -V upgrade
+apt-get update && apt-get -V upgrade
 
 echo "Regles iptables basic"
 # xxx.xxx.xxx.xxx est le server ip
