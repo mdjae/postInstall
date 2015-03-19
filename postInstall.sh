@@ -228,7 +228,9 @@ echo "Regles iptables basic"
 # xxx.xxx.xxx.xxx est le server ip
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
-
+# block any IP address who has made more than 7 ssh connections within the past 7 minutes.
+iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name DEFAULT --rsource
+iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --update --seconds 420 --hitcount 8 --name DEFAULT --rsource -j DROP
 
 
 
