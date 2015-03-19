@@ -87,8 +87,8 @@ sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool
 
 
 #MYSQL
-apt-get install mysql-server
-service mysql restart
+apt-get install mysql-server \
+service mysql restart \
 update-rc.d -f mysql enable
 
 
