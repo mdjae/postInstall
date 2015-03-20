@@ -9,6 +9,7 @@ VERSION="0.1"
 
 #===================================
 
+# TODO : Configuration ....
 # Source config variable
 source ./postInstall.config
 
@@ -24,10 +25,16 @@ if [ $EUID -ne 0 ]; then
 fi
 
 
-# SSH service already here
 echo "========================================================================"
-echo "securisation SSH"
+echo "Mise à jour système"
 echo "========================================================================"
+apt-get update && apt-get -V upgrade
+
+
+echo "========================================================================"
+echo "Securisation"
+echo "========================================================================"
+echo "SSH"
 sed -i 's/Port 22/Port 222/g' /etc/ssh/sshd_config
 sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config 
@@ -55,15 +62,35 @@ sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]} ${SSH_USERS[4]}" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
+
+echo "Regles iptables basic"
+echo "================== ======================================================"
+
+# xxx.xxx.xxx.xxx est le server ip
+iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
+iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
+# block any IP address who has made more than 7 ssh connections within the past 7 minutes.
+iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name DEFAULT --rsource
+iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --update --seconds 420 --hitcount 8 --name DEFAULT --rsource -j DROP
+
+
 # FAIL2BAN ============================================================
 apt-get install fail2ban
 
 
-# TODO : Configuration ....
+echo "========================================================================"
+echo "Installation logiciel"
+echo "========================================================================"
+
+#MYSQL
+echo "MySql"
+echo "================== ======================================================"
+apt-get install mysql-server \
+service mysql restart \
+update-rc.d -f mysql enable
 
 
 # PHP #PHP-FPM #PHP APC
-echo "================== ======================================================"
 echo "Installation PHP + PHP-FPM"
 echo "========================================================================"
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn \
@@ -86,107 +113,93 @@ sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool
 /etc/init.d/php5-fpm restart
 
 
-#MYSQL
-apt-get install mysql-server \
-service mysql restart \
-update-rc.d -f mysql enable
-
-
 #PHPMYADMIN
 apt-get install dbconfig-common phpmyadmin
 
 
 #PROFTPD
 apt-get install proftpd
-/etc/init.d/proftpd stop
 
+/etc/init.d/proftpd stop
 mkdir /etc/proftpd
 cd /etc/proftpd
 openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.pem
 
-
-
 # Edit the /etc/shells file, vi /etc/shells and add a non-existent shell name like null, 
-#for example. This fake shell will limit access on the system for FTP users.
-#
-#         [root@deep ] /# vi /etc/shells
-#          /bin/bash
-#          /bin/sh
-#          /bin/ash
-#          /bin/bsh
-#          /bin/tcsh
-#          /bin/csh
-#          /dev/null  
-        
+# for example. This fake shell will limit access on the system for FTP users.
 # /dev/null, This is our added no-existent shell. With Red Hat Linux, a special device name /dev/null 
 # exists for purposes such as these.
-# Now, edit your /etc/passwd file and add manually the /./ line to divide the /home/ftp directory with the /ftpadmin directory where the user ftpadmin should be automatically chdir'd to. 
+cat >> /etc/shells <<EOF
+/dev/null
+EOF
+
+
+# Now, edit your /etc/passwd file and add manually 
+# the /./ line to divide the /home/ftp directory with the /ftpadmin directory 
+# where the user ftpadmin should be automatically chdir'd to. 
 # This step must be done for each FTP user you add to your passwd file.
- #         ftpadmin:x:502:502::/home/ftp/ftpadmin/:/dev/null
-        
+#         ftpadmin:x:502:502::/home/ftp/ftpadmin/:/dev/null
 #To read:
 #          ftpadmin:x:502:502::/home/ftp/./ftpadmin/:/dev/null
-
 
 
 # NGINX
 apt-get install nginx
 service nginx start
-# vim /etc/nginx/conf.d/php5-fpm.conf
+
+cat >> /etc/nginx/conf.d/php5-fpm.conf <<EOF
  
+ upstream php5-fpm-sock {
+         server unix:/var/run/php5-fpm.sock;
+ }
+EOF
 
-# upstream php5-fpm-sock {
-#         server unix:/var/run/php5-fpm.sock;
-# }
+cat >> /etc/nginx/sites-available/default <<EOF
 
-
-# Write in /etc/nginx/sites-available/default
-
-# server {
-#         listen   80;
+ server {
+         listen   80;
      
+         root /usr/share/nginx/www;
+         index index.php index.html index.htm;
 
-#         root /usr/share/nginx/www;
-#         index index.php index.html index.htm;
+         server_name XXX.com;
 
-#         server_name XXX.com;
+         location / {
+                 try_files $uri $uri/ /index.html;
+         }
 
-#         location / {
-#                 try_files $uri $uri/ /index.html;
-#         }
+         error_page 404 /404.html;
 
-#         error_page 404 /404.html;
+         error_page 500 502 503 504 /50x.html;
+         location = /50x.html {
+               root /usr/share/nginx/www;
+         }
 
-#         error_page 500 502 503 504 /50x.html;
-#         location = /50x.html {
-#               root /usr/share/nginx/www;
-#         }
+         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+         location ~ \.php$ {
+                 try_files $uri =404;
+                 fastcgi_pass unix:/var/run/php5-fpm.sock;
+                 fastcgi_index index.php;
+                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                 include fastcgi_params;
+                 
+         }
+ 
+ }
+EOF
 
-#         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-#         location ~ \.php$ {
-#                 try_files $uri =404;
-#                 fastcgi_pass unix:/var/run/php5-fpm.sock;
-#                 fastcgi_index index.php;
-#                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-#                 include fastcgi_params;
-#                 
-#         }
-# 
-# }
+# Thanks to
+# http://www.if-not-true-then-false.com/2011/nginx-and-php-fpm-configuration-and-optimizing-tips-and-tricks/
 
 
-#  http://www.if-not-true-then-false.com/2011/nginx-and-php-fpm-configuration-and-optimizing-tips-and-tricks/
+# Apache2
 
+# NodeJs
+apt-get install curl
+curl -sL https://deb.nodesource.com/setup | bash -
+apt-get install -y nodejs
 
 # OrientDB
-
-# Paths Oracle 10g
-export PATH=$PATH:/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/bin:
-ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
-export ORACLE_HOME
-export ORACLE_SID=XE
-LD_LIBRARY_PATH=/opt/oracle/instantclient_10_2/
-export LD_LIBRARY_PATH
 
 # Java
 export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
@@ -218,22 +231,6 @@ source $HOME/.bashrc
 
 
 
-# Mise a jour 
-#------------
-
-echo "Mise a jour de la liste des depots"
-#
-
-echo "Mise a jour du systeme"
-apt-get update && apt-get -V upgrade
-
-echo "Regles iptables basic"
-# xxx.xxx.xxx.xxx est le server ip
-iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
-iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
-# block any IP address who has made more than 7 ssh connections within the past 7 minutes.
-iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name DEFAULT --rsource
-iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --update --seconds 420 --hitcount 8 --name DEFAULT --rsource -j DROP
 
 
 
