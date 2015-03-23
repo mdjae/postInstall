@@ -145,7 +145,7 @@ EOF
 
 # NGINX
 apt-get install nginx
-service nginx start
+
 
 cat >> /etc/nginx/conf.d/php5-fpm.conf <<EOF
  
@@ -221,7 +221,7 @@ apt-get install ncdu htop
 # Custom .bashrc
 
 cat >> $HOME/.bashrc << EOF 
-alias ll='ls -algs' 
+alias ll='ls -hsla' 
 alias l='ls -ltr'
 alias rm='rm -i'
 alias mv='mv -i'
