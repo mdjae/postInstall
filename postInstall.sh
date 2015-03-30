@@ -85,8 +85,8 @@ echo "========================================================================"
 #MYSQL
 echo "MySql"
 echo "================== ======================================================"
-apt-get install mysql-server \
-service mysql restart \
+apt-get install mysql-server 
+service mysql restart 
 update-rc.d -f mysql enable
 
 
