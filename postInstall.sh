@@ -63,6 +63,15 @@ echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]}
 /etc/init.d/ssh restart
 
 
+echo "RKHunter"
+echo "================== ======================================================"
+apt-get install rkhunter
+# TODO : Cron weekly scan and email
+echo "Clamav"
+echo "================== ======================================================"
+apt-get install clamav
+#TODO : Cron weekly scan and email
+
 echo "Regles iptables basic"
 echo "================== ======================================================"
 
