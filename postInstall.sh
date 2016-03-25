@@ -75,7 +75,8 @@ apt-get install clamav
 echo "Regles iptables basic"
 echo "================== ======================================================"
 
-# xxx.xxx.xxx.xxx est le server ip
+apt-get install iptables
+# xxx.xxx.xxx.xxx est l'ip de votre serveur server ip
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
 # block any IP address who has made more than 7 ssh connections within the past 7 minutes.
