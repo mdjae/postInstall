@@ -24,61 +24,44 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
-
-echo "========================================================================"
-echo "Mise à jour système"
-echo "========================================================================"
+echo "System update"
+echo "-------------------------------------------------------------------------"
 apt-get update && apt-get -V upgrade
 echo "Install serveur horaire"
 apt-get install ntp
 
 
-echo "========================================================================"
-echo "Securisation"
-echo "========================================================================"
-echo "SSH"
+echo "SSH hardening"
+echo "-------------------------------------------------------------------------"
 sed -i 's/Port 22/Port 222/g' /etc/ssh/sshd_config
 sed -i 's/Protocol 1/Protocol 2/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config 
 
 
-#for filename in $(ls)
-#	do
-	# Take extension available in a filename
-#        ext=${filename##*\.}
+echo "SSH Authorized users"
+echo "-------------------------------------------------------------------------"
+SSH_USERS=(jdoe bckp tech)
+for u in ${SSH_USERS[@]}
+do
+	echo "AllowUsers $U" >> /etc/ssh/sshd_config
+done
 
-#        case "$ext" in
-#        	c) echo "$filename : C source file"
-#       	   ;;
-#        	o) echo "$filename : Object file"
-#       	   ;;
-#        	sh) echo "$filename : Shell script"
-#       	    ;;
-#        	txt) echo "$filename : Text file"
-#       	    ;;
-#       	 *) echo "C"
-#       	    ;;
-#	esac
-#done
-
-echo "AllowUsers ${SSH_USERS[0]} ${SSH_USERS[1]} ${SSH_USERS[2]} ${SSH_USERS[3]} ${SSH_USERS[4]}" >> /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
 
 echo "RKHunter"
-echo "================== ======================================================"
+echo "-------------------------------------------------------------------------"
 apt-get install rkhunter
 # TODO : Cron weekly scan and email
 echo "Clamav"
-echo "================== ======================================================"
+echo "-------------------------------------------------------------------------"
 apt-get install clamav
 #TODO : Cron weekly scan and email
 
-echo "Regles iptables basic"
-echo "================== ======================================================"
-
+echo "Basic iptables rules"
+echo "-------------------------------------------------------------------------"
 apt-get install iptables
-# xxx.xxx.xxx.xxx est l'ip de votre serveur server ip
+# xxx.xxx.xxx.xxx is your SERVER IP
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
 iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
 # block any IP address who has made more than 7 ssh connections within the past 7 minutes.
@@ -86,7 +69,8 @@ iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recen
 iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --update --seconds 420 --hitcount 8 --name DEFAULT --rsource -j DROP
 
 
-# FAIL2BAN ============================================================
+echo "Fail2ban"
+echo "-------------------------------------------------------------------------"
 apt-get install fail2ban
 
 
@@ -96,7 +80,7 @@ echo "========================================================================"
 
 #MYSQL
 echo "MySql"
-echo "================== ======================================================"
+echo "-------------------------------------------------------------------------"
 apt-get install mysql-server 
 service mysql restart 
 update-rc.d -f mysql enable
@@ -104,7 +88,7 @@ update-rc.d -f mysql enable
 
 # PHP #PHP-FPM #PHP APC
 echo "Installation PHP + PHP-FPM"
-echo "========================================================================"
+echo "-------------------------------------------------------------------------"
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-intl \
 php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache \
 php5-mysql php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc \
@@ -126,10 +110,12 @@ sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool
 
 
 #PHPMYADMIN
+echo "-------------------------------------------------------------------------"
 apt-get install dbconfig-common phpmyadmin
 
 
 #PROFTPD
+echo "-------------------------------------------------------------------------"
 apt-get install proftpd
 
 /etc/init.d/proftpd stop
@@ -156,8 +142,8 @@ EOF
 
 
 # NGINX
+echo "-------------------------------------------------------------------------"
 apt-get install nginx
-
 
 cat >> /etc/nginx/conf.d/php5-fpm.conf <<EOF
  
@@ -205,24 +191,30 @@ EOF
 
 
 # Apache2
+echo "-------------------------------------------------------------------------"
 
 # NodeJs
+echo "-------------------------------------------------------------------------"
 apt-get install curl
 curl -sL https://deb.nodesource.com/setup | bash -
 apt-get install -y nodejs
 
 # OrientDB
+echo "-------------------------------------------------------------------------"
 
 # Java
+echo "-------------------------------------------------------------------------"
 export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
 
 # Tomcat
+echo "-------------------------------------------------------------------------"
 export TOMCAT_HOME=/opt/tomcat
 export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
 alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
 alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
 
 # Utilitaire SysAdmin
+echo "-------------------------------------------------------------------------"
 apt-get install ncdu htop
 
 
@@ -243,12 +235,7 @@ source $HOME/.bashrc
 
 
 
-
-
-
 echo "========================================================================"
 echo "Fin du script"
 echo "========================================================================"
 
-# Fin du script
-#---------------
