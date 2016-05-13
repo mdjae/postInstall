@@ -79,58 +79,64 @@ echo "Installation logiciel"
 echo "========================================================================"
 
 #MYSQL
-echo "MySql"
-echo "-------------------------------------------------------------------------"
-apt-get install mysql-server 
-service mysql restart 
-update-rc.d -f mysql enable
+if[ $MYSQL -eq 1 ];then
 
+	echo "MySql"
+	echo "-------------------------------------------------------------------------"
+	apt-get install mysql-server 
+	service mysql restart 
+	update-rc.d -f mysql enable
+
+fi
 
 # PHP #PHP-FPM #PHP APC
-echo "Installation PHP + PHP-FPM"
-echo "-------------------------------------------------------------------------"
-apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-intl \
-php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache \
-php5-mysql php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc \
-php5-xsl php5-fpm php5-mysql 
-
-# PHP- APC
-apt-get install php5-apc
-
-# Configuraiton 
-# vim /etc/php5/apache2/php.ini
-# write before Module Settings section : extension=apc.so
-# write after Module Settings section : 
-# [APC] apc.enabled=1
-
-
-#PHP-FPM CONFIG
-sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
-/etc/init.d/php5-fpm restart
-
+if[ $PHP -eq 1 ];then
+	echo "Installation PHP + PHP-FPM"
+	echo "-------------------------------------------------------------------------"
+	apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-intl \
+	php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache \
+	php5-mysql php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc \
+	php5-xsl php5-fpm php5-mysql 
+	
+	# PHP- APC
+	apt-get install php5-apc
+	
+	# Configuraiton 
+	# vim /etc/php5/apache2/php.ini
+	# write before Module Settings section : extension=apc.so
+	# write after Module Settings section : 
+	# [APC] apc.enabled=1
+	
+	
+	#PHP-FPM CONFIG
+	sed -i 's/listen = 127.0.0.1:9000/;listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
+	/etc/init.d/php5-fpm restart
+fi
 
 #PHPMYADMIN
-echo "-------------------------------------------------------------------------"
-apt-get install dbconfig-common phpmyadmin
-
+if[ $PHPMYADMIN -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+	apt-get install dbconfig-common phpmyadmin
+fi
 
 #PROFTPD
-echo "-------------------------------------------------------------------------"
-apt-get install proftpd
-
-/etc/init.d/proftpd stop
-mkdir /etc/proftpd
-cd /etc/proftpd
-openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.pem
-
-# Edit the /etc/shells file, vi /etc/shells and add a non-existent shell name like null, 
-# for example. This fake shell will limit access on the system for FTP users.
-# /dev/null, This is our added no-existent shell. With Red Hat Linux, a special device name /dev/null 
-# exists for purposes such as these.
-cat >> /etc/shells <<EOF
-/dev/null
-EOF
-
+if[ $PROFTPD -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+	apt-get install proftpd
+	
+	/etc/init.d/proftpd stop
+	mkdir /etc/proftpd
+	cd /etc/proftpd
+	openssl req -new -x509 -days 365 -nodes -out ftpd-rsa.pem -keyout ftpd-rsa-key.pem
+	
+	# Edit the /etc/shells file, vi /etc/shells and add a non-existent shell name like null, 
+	# for example. This fake shell will limit access on the system for FTP users.
+	# /dev/null, This is our added no-existent shell. With Red Hat Linux, a special device name /dev/null 
+	# exists for purposes such as these.
+	cat >> /etc/shells <<EOF
+	/dev/null
+	EOF
+fi
 
 # Now, edit your /etc/passwd file and add manually 
 # the /./ line to divide the /home/ftp directory with the /ftpadmin directory 
@@ -142,6 +148,7 @@ EOF
 
 
 # NGINX
+if[ $NGINX -eq 1 ];then
 echo "-------------------------------------------------------------------------"
 apt-get install nginx
 
@@ -188,30 +195,40 @@ EOF
 
 # Thanks to
 # http://www.if-not-true-then-false.com/2011/nginx-and-php-fpm-configuration-and-optimizing-tips-and-tricks/
-
+fi
 
 # Apache2
-echo "-------------------------------------------------------------------------"
-
+if[ $APACHE2 -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+fi
 # NodeJs
-echo "-------------------------------------------------------------------------"
-apt-get install curl
-curl -sL https://deb.nodesource.com/setup | bash -
-apt-get install -y nodejs
-
+if[ $NODEJS -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+	apt-get install curl
+	curl -sL https://deb.nodesource.com/setup | bash -
+	apt-get install -y nodejs
+fi
 # OrientDB
-echo "-------------------------------------------------------------------------"
-
+if[ $ORIENTDB -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+fi
 # Java
-echo "-------------------------------------------------------------------------"
-export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
-
+if[ $JAVA -eq 1 ];then
+	echo "-------------------------------------------------------------------------"
+	export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
+fi
 # Tomcat
-echo "-------------------------------------------------------------------------"
-export TOMCAT_HOME=/opt/tomcat
-export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
-alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
-alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
+if[ $TOMCAT -eq 1 ];then
+
+	echo "-------------------------------------------------------------------------"
+	export TOMCAT_HOME=/opt/tomcat
+	export SERVLET_JAR=$TOMCAT_HOME/lib/servlet-api.jar
+	alias tstop='sudo $TOMCAT_HOME/bin/shutdown.sh'
+	alias tstart='sudo $TOMCAT_HOME/bin/catalina.sh run'
+
+fi
+
+
 
 # Utilitaire SysAdmin
 echo "-------------------------------------------------------------------------"
