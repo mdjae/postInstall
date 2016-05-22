@@ -44,7 +44,7 @@ SSH_USERS=(jdoe bckp tech)
 $cmd="AllowUsers "
 for u in ${SSH_USERS[@]}
 do
-	$cmd=$cmd + $u
+	$cmd+=" $u"
 	echo "$cmd" >> /etc/ssh/sshd_config
 done
 
