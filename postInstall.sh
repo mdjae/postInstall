@@ -41,9 +41,11 @@ sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 echo "SSH Authorized users"
 echo "-------------------------------------------------------------------------"
 SSH_USERS=(jdoe bckp tech)
+$cmd="AllowUsers "
 for u in ${SSH_USERS[@]}
 do
-	echo "AllowUsers $U" >> /etc/ssh/sshd_config
+	$cmd=$cmd + $u
+	echo "$cmd" >> /etc/ssh/sshd_config
 done
 
 /etc/init.d/ssh restart
