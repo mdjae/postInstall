@@ -203,6 +203,7 @@ fi
 # Apache2
 if[ $APACHE2 -eq 1 ];then
 	echo "-------------------------------------------------------------------------"
+	apt-get install apache2
 fi
 # NodeJs
 if[ $NODEJS -eq 1 ];then
