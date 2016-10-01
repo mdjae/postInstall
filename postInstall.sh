@@ -12,6 +12,7 @@ VERSION="0.1"
 # TODO : Configuration ....
 # Source config variable
 source ./postInstall.config
+MY_IP="$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com)"
 
 # Color bash prompt
 sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' /root/.bashrc
@@ -64,8 +65,8 @@ echo "Basic iptables rules"
 echo "-------------------------------------------------------------------------"
 apt-get install iptables
 # xxx.xxx.xxx.xxx is your SERVER IP
-iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP
-iptables -I INPUT -d xxx.xxx.xxx.xxx -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP
+echo "iptables -I INPUT -d ${MY_IP} -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /w00tw00t.at.ISC.SANS.' -j DROP"
+echo "iptables -I INPUT -d ${MY_IP} -p tcp --dport 80 -m string --to 70 --algo bm --string 'GET /phpTest/zologize/axa.php' -j DROP"
 # block any IP address who has made more than 7 ssh connections within the past 7 minutes.
 iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name DEFAULT --rsource
 iptables -I INPUT -i eth1 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --update --seconds 420 --hitcount 8 --name DEFAULT --rsource -j DROP
