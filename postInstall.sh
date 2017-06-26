@@ -250,7 +250,7 @@ alias ll='ls -hsla'
 alias l='ls -ltr'
 alias rm='rm -i'
 alias mv='mv -i'
-alias cp='cp -i'
+alias cp='cp -rpi'
 EOF
 source $HOME/.bashrc
 
