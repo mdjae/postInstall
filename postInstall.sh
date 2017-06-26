@@ -1,9 +1,9 @@
 #!/bin/bash
 #
 # mdjae - 2014 - GPL
-# Le script de post install vient après l'install d'une distro :
-# EN MODE SERVER : Debian 7.5 Wheezy 64 bits
-# EN MODE WORKSTATION : CrunchBang Linux 11 "Waldorf"
+# This post install script comes after installing OS :
+# IN SERVER MODE  : Debian 7.5 Wheezy 64 bits
+# IN WORKSTATION MODE  : BunsenLabs Linux  "Deuterium" 
 
 VERSION="0.1"
 
