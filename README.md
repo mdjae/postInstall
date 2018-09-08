@@ -1,10 +1,10 @@
-postInstall
+postInstall V0.1
 ===========
 
 Script de post installation de station de travail ou de serveur de production.
-La configuration de l'install dans un fichier à part.
+La configuration de l'installation dans un fichier à part.
 
-###sécuriser ssh
+sécuriser ssh
 =============
 modifier le fichier /etc/ssh/sshd_config
 
@@ -16,7 +16,7 @@ désactiver le login Root avec PermitRootLogin placé à « No »
 faire une liste des utilisateurs autorisés à se connecter en ssh avec AllowUsers 
 
 
-###ban ip
+ban ip
 =======
 bannir les adresses ip qui tente de se connecter 
 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
