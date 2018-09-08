@@ -39,7 +39,7 @@ install php
 ==============
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-mysql
 
-/etc/php5/apache2/php.ini
+Modification dans /etc/php5/apache2/php.ini
 
 max_execution_time = 90
 max_input_time = 120
