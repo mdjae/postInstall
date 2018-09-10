@@ -1,11 +1,10 @@
 # postInstall V0.1
-===========
 
 Script de post installation de station de travail ou de serveur de production.
 La configuration de l'installation dans un fichier à part.
 
 ## Sécuriser l'accès ssh
-=============
+
 Modification sur le fichier /etc/ssh/sshd_config
 
 - change le port (par défaut sur 22)
@@ -14,18 +13,18 @@ Modification sur le fichier /etc/ssh/sshd_config
 - Ajoute une liste des utilisateurs autorisés à se connecter en ssh via AllowUsers 
 
 
-Activation de BAN IP
-=======
+## Activation de BAN IP
+
 - bannir les adresses ip qui tente de se connecter 
 - 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
 
-Choix du serveur web 
-===============
+## Choix du serveur web 
+
 - Apache
 - Nginx
 
-Apache
-===============
+### Apache
+
 Dans /etc/apache2/apache2.conf
 ```
 // Enlever les informations sur le serveur en cas de 404--
@@ -34,15 +33,15 @@ ServerTokens Prod
 // nom serveur
 ServerName ksXXXXXX.kimsufi.com
 ```
-Nginx
-===============
+### Nginx
 
 
-Choix de base de données
-===============
 
-Mysql
-==============
+## Choix de base de données
+
+
+### Mysql
+
 ```
  apt-get install mysql-server mysql-client mysql-common
  
@@ -74,19 +73,19 @@ lancer « mysql_secure_installation
 apt-get install phpmyadmin
 ``` 
  
-Redis
-==============
+## Redis
 ```
 ```
 
  
-MongoDB
-==============
+## MongoDB
 ```
 ```
 
-PHP
-==============
+## Choix de base du language
+
+## PHP
+
 - Choix entre PHP5.6 / PHP7.1
 ```
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-mysql
@@ -114,24 +113,24 @@ mbstring.http_output=UTF-8
 mbstring.detect_order=auto
 ```
 
-PHP-FPM
-==============
-```
-```
-
-APC
-==============
+## PHP-FPM
 
 ```
 ```
 
-Python
-==============
+## APC
+
+
+```
+```
+
+### Python
+
  
 ```
 ```
 
-Utilisation du script de post install
+## Utilisation du script de post install
 ============
 
 - wget https://raw.githubusercontent.com/mdjae/postInstall/master/postInstall.sh
