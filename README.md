@@ -20,6 +20,9 @@ Activation de BAN IP
 - 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
 
 Choix du serveur web 
+===============
+- Apache
+- Nginx
 
 Apache
 ===============
@@ -34,40 +37,10 @@ Nginx
 ===============
 
 
-install php
-==============
-apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-mysql
+Choix de base de données
+===============
 
-Modification dans /etc/php5/apache2/php.ini
-
-max_execution_time = 90
-max_input_time = 120
-memory_limit = 1024M
-upload_max_filesize = 15M
-register_globals = Off
-//  Cache php
-expose_php = Off
-//  Affiche les erreurs dans les scripts (uniquement en dev)
-display_errors = On
-short_open_tag = Off
-magic_quotes_gpc = Off
-// Quelques fonctions qui peuvent être dangereuses à limiter
-// disable_functions = symlink,shell_exec,exec,proc_close,proc_open,popen,system,dl,passthru,escapeshellarg,escapeshellcmd
-// Pour activer l'utf-8 par defaut
-mbstring.language=UTF-8
-mbstring.internal_encoding=UTF-8
-mbstring.http_input=UTF-8
-mbstring.http_output=UTF-8
-mbstring.detect_order=auto
-
-install php-fpm
-==============
-
-
-install APC
-==============
-
-install mysql
+Mysql
 ==============
  apt-get install mysql-server mysql-client mysql-common
  
@@ -96,14 +69,54 @@ default-character-set = utf8
  /etc/init.d/mysql reload
  
 lancer « mysql_secure_installation
- apt-get install phpmyadmin
+apt-get install phpmyadmin
  
  
-install Redis / MongoDB
+Redis
+==============
+
+ 
+MongoDB
 ==============
 
 
-install python
+PHP
+==============
+- Choix entre PHP5.6 / PHP7.1
+
+apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-mysql
+
+Modification dans /etc/php5/apache2/php.ini
+
+max_execution_time = 90
+max_input_time = 120
+memory_limit = 1024M
+upload_max_filesize = 15M
+register_globals = Off
+//  Cache php
+expose_php = Off
+//  Affiche les erreurs dans les scripts (uniquement en dev)
+display_errors = On
+short_open_tag = Off
+magic_quotes_gpc = Off
+// Quelques fonctions qui peuvent être dangereuses à limiter
+// disable_functions = symlink,shell_exec,exec,proc_close,proc_open,popen,system,dl,passthru,escapeshellarg,escapeshellcmd
+// Pour activer l'utf-8 par defaut
+mbstring.language=UTF-8
+mbstring.internal_encoding=UTF-8
+mbstring.http_input=UTF-8
+mbstring.http_output=UTF-8
+mbstring.detect_order=auto
+
+PHP-FPM
+==============
+
+
+APC
+==============
+
+
+Python
 ==============
  
 
@@ -112,7 +125,6 @@ install python
 Utilisation du script de post install
 ============
 
-
-wget http://svn.xxxxx.com/postinstall/trunk/postinstall.sh
-chmod a+x ./postinstall.sh
-sudo ./postinstall.sh
+- wget https://raw.githubusercontent.com/mdjae/postInstall/master/postInstall.sh
+- chmod a+x ./postinstall.sh
+- sudo ./postinstall.sh
