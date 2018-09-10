@@ -73,18 +73,18 @@ lancer « mysql_secure_installation
 apt-get install phpmyadmin
 ``` 
  
-## Redis
+### Redis
 ```
 ```
 
  
-## MongoDB
+### MongoDB
 ```
 ```
 
 ## Choix de base du language
 
-## PHP
+### PHP
 
 - Choix entre PHP5.6 / PHP7.1
 ```
@@ -113,12 +113,12 @@ mbstring.http_output=UTF-8
 mbstring.detect_order=auto
 ```
 
-## PHP-FPM
+### PHP-FPM
 
 ```
 ```
 
-## APC
+### APC
 
 
 ```
