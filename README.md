@@ -1,10 +1,10 @@
-postInstall V0.1
+# postInstall V0.1
 ===========
 
 Script de post installation de station de travail ou de serveur de production.
 La configuration de l'installation dans un fichier à part.
 
-Sécuriser l'accès ssh
+## Sécuriser l'accès ssh
 =============
 Modification sur le fichier /etc/ssh/sshd_config
 
@@ -27,12 +27,13 @@ Choix du serveur web
 Apache
 ===============
 Dans /etc/apache2/apache2.conf
+```
 // Enlever les informations sur le serveur en cas de 404--
 ServerSignature Off
 ServerTokens Prod
 // nom serveur
 ServerName ksXXXXXX.kimsufi.com
-
+```
 Nginx
 ===============
 
@@ -42,6 +43,7 @@ Choix de base de données
 
 Mysql
 ==============
+```
  apt-get install mysql-server mysql-client mysql-common
  
  /etc/mysql/my.cnf
@@ -70,20 +72,23 @@ default-character-set = utf8
  
 lancer « mysql_secure_installation
 apt-get install phpmyadmin
- 
+``` 
  
 Redis
 ==============
+```
+```
 
  
 MongoDB
 ==============
-
+```
+```
 
 PHP
 ==============
 - Choix entre PHP5.6 / PHP7.1
-
+```
 apt-get install libapache2-mod-php5 php5 php5-common php5-curl php5-dev php5-gd php5-idn php-pear php5-imagick php5-imap php5-json php5-mcrypt php5-memcache php5-mhash php5-ming php5-mysql php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-fpm php5-mysql
 
 Modification dans /etc/php5/apache2/php.ini
@@ -107,20 +112,24 @@ mbstring.internal_encoding=UTF-8
 mbstring.http_input=UTF-8
 mbstring.http_output=UTF-8
 mbstring.detect_order=auto
+```
 
 PHP-FPM
 ==============
-
+```
+```
 
 APC
 ==============
 
+```
+```
 
 Python
 ==============
  
-
-
+```
+```
 
 Utilisation du script de post install
 ============
