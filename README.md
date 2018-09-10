@@ -4,24 +4,24 @@ postInstall V0.1
 Script de post installation de station de travail ou de serveur de production.
 La configuration de l'installation dans un fichier à part.
 
-sécuriser ssh
+Sécuriser l'accès ssh
 =============
-modifier le fichier /etc/ssh/sshd_config
+Modification sur le fichier /etc/ssh/sshd_config
 
-changer le port (par défaut sur 22)
-
-véfifier qu'on êtes bien en protocole 2  
-
-désactiver le login Root avec PermitRootLogin placé à « No » 
-faire une liste des utilisateurs autorisés à se connecter en ssh avec AllowUsers 
+- change le port (par défaut sur 22)
+- véfifie la présence du protocole 2  
+- désactiver le login Root avec PermitRootLogin « No » 
+- Ajoute une liste des utilisateurs autorisés à se connecter en ssh via AllowUsers 
 
 
-ban ip
+Activation de BAN IP
 =======
-bannir les adresses ip qui tente de se connecter 
-5 fois de suites avec un mot de passe erroné grâce à fail2ban.
+- bannir les adresses ip qui tente de se connecter 
+- 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
 
-install apache
+Choix du serveur web 
+
+Apache
 ===============
 Dans /etc/apache2/apache2.conf
 // Enlever les informations sur le serveur en cas de 404--
@@ -30,8 +30,7 @@ ServerTokens Prod
 // nom serveur
 ServerName ksXXXXXX.kimsufi.com
 
-
-install nginx
+Nginx
 ===============
 
 
