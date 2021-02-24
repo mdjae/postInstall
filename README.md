@@ -153,7 +153,6 @@ mbstring.detect_order=auto
 ```
 
 ## Utilisation du script de post install
-============
 
 - wget https://raw.githubusercontent.com/mdjae/postInstall/master/postInstall.sh
 - chmod a+x ./postinstall.sh
