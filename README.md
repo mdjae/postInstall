@@ -1,7 +1,8 @@
 # postInstall V0.1
 
-Script de post installation de station de travail ou de serveur de production.
+Script de post installation  de serveur.
 La configuration de l'installation dans un fichier à part.
+Ajout les domaines associer à Uptime Robot HTTP check 15min
 
 ## Sécuriser l'accès ssh
 
