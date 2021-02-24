@@ -12,13 +12,33 @@ Modification sur le fichier /etc/ssh/sshd_config
 - désactiver le login Root avec PermitRootLogin « No » 
 - Ajoute une liste des utilisateurs autorisés à se connecter en ssh via AllowUsers 
 
+## Activation de UFW
 
-## Activation de BAN IP
+```
+apt-get install ufw
+sudo vi /etc/default/ufw
+IPV6=yes
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 2222/tcp
+sudo ufw allow www
+sudo ufw allow 80/tcp 
+sudo ufw allow ftp
+sudo ufw allow 21/tcp 
+sudo ufw allow from 192.168.255.255
+sudo ufw enable
+
+
+```
+
+## Activation de Fail2Ban
 
 - bannir les adresses ip qui tente de se connecter 
 - 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
+```
 - apt-get install fail2ban
-
+```
 
 ## Choix du serveur web 
 
