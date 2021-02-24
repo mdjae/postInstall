@@ -7,8 +7,8 @@ La configuration de l'installation dans un fichier à part.
 
 Modification sur le fichier /etc/ssh/sshd_config
 
-- change le port (par défaut sur 22)
-- véfifie la présence du protocole 2  
+- changer le port (par défaut sur 22)
+- vérifier la présence du protocole 2  
 - désactiver le login Root avec PermitRootLogin « No » 
 - Ajoute une liste des utilisateurs autorisés à se connecter en ssh via AllowUsers 
 
@@ -17,6 +17,8 @@ Modification sur le fichier /etc/ssh/sshd_config
 
 - bannir les adresses ip qui tente de se connecter 
 - 5 fois de suites avec un mot de passe erroné grâce à fail2ban.
+- apt-get install fail2ban
+
 
 ## Choix du serveur web 
 
