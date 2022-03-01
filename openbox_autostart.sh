@@ -1,19 +1,8 @@
 ## Openbox autostart.sh
 ## ====================
-## When you login to your CrunchBang Openbox session, this autostart script 
-## will be executed to set-up your environment and launch any applications
-## you want to run at startup.
-##
-## Note*: some programs, such as 'nm-applet' are run via XDG autostart.
-## Run '/usr/lib/openbox/openbox-xdg-autostart --list' to list any
-## XDG autostarted programs.
-##
+## When you login Openbox session, this autostart script 
 ## More information about this can be found at:
 ## http://openbox.org/wiki/Help:Autostart
-##
-## If you do something cool with your autostart script and you think others
-## could benefit from your hack, please consider sharing it at:
-## http://crunchbang.org/forums/
 ##
 ## Have fun & happy CrunchBangin'! :)
 
@@ -81,12 +70,12 @@ cb-cowpowers &
 conky -q &
 
 ## Custom
+#######################################"
 xrandr --output VGA-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DVI-0 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-0 --off &
 geany &
 terminator -m --layout=start &
 chromium-browser --new-tab-page-1 http://mail.google.com/ &
 sshfs root@192.168.1.200:/var/www /home/mdjae/dd &
-sshfs root@192.168.1.202:/home/samba-share/avahis /home/mdjae/dd4_avahis &
 sshfs root@192.168.1.202:/home/samba-share/projets /home/mdjae/dd_projets &
 sshfs root@192.168.1.202:/home/samba-share/communication /home/mdjae/dd_communication &
 
