@@ -50,11 +50,11 @@ sudo ufw enable
 
 Dans /etc/apache2/apache2.conf
 ```
-// Enlever les informations sur le serveur en cas de 404--
+// Enlever les informations sur le serveur en cas de 4XX / 5XX --
 ServerSignature Off
 ServerTokens Prod
 // nom serveur
-ServerName ksXXXXXX.kimsufi.com
+ServerName ksXXXXXX.hostname.com
 ```
 ### Nginx
 
@@ -63,10 +63,10 @@ ServerName ksXXXXXX.kimsufi.com
 ## Choix de base de données
 
 
-### Mysql
+### MariaDB
 
 ```
- apt-get install mysql-server mysql-client mysql-common
+ apt-get install mariadb-server
  
  /etc/mysql/my.cnf
  
